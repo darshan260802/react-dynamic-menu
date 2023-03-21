@@ -11,18 +11,19 @@ function App() {
   });
 
   const addNode = () => {
-    const input = document.querySelector("#inp").value;
+    const input = document.querySelector("#inp");
     if (!input) return;
     const newNode = {
       id: state.nodeList.length,
       level: state.currentLevel,
       parent: state.currentParent,
-      value: input,
+      value: input.value,
     };
     setState((prevState) => ({
       ...prevState,
       nodeList: [...prevState.nodeList, newNode],
     }));
+    input.value = '';
   };
 
   return (

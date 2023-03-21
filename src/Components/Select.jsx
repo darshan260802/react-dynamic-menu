@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
 export default function Select({ level, parent, state, setState }) {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState('null');
 
   useEffect(() => {
     setState((prevState) => ({
       ...prevState,
-      currentLevel: selected === null ? level : level + 1,
-      currentParent: selected === null ? parent : selected,
+      currentLevel: selected === 'null' ? level : level + 1,
+      currentParent: selected === 'null' ? parent : Number(selected),
     }));
   }, [selected, level, parent]);
 
@@ -16,10 +16,10 @@ export default function Select({ level, parent, state, setState }) {
       <select
         value={selected}
         onChange={(e) =>
-          setSelected(e.target.value === "null" ? null : Number(e.target.value))
+          setSelected(e.target.value)
         }
       >
-        <option value={null}>{level === 0 ? "Select Child" : "None"}</option>
+        <option value={'null'}>{level === 0 ? "Select Child" : "None"}</option>
         {state.nodeList
           .filter((item) => item.parent === parent && item.level === level)
           .map((item) => {
@@ -31,13 +31,13 @@ export default function Select({ level, parent, state, setState }) {
           })}
       </select>
 
-      {selected !== null &&
+      {selected !== 'null' &&
       state.nodeList.filter(
-        (item) => item.parent === selected && item.level === level + 1
+        (item) => item.parent === Number(selected) && item.level === level + 1
       ).length ? (
         <Select
           level={level + 1}
-          parent={selected}
+          parent={Number(selected)}
           state={state}
           setState={setState}
         />
